@@ -6,7 +6,7 @@
 /*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:49:52 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/23 19:54:51 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:27:51 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,15 @@ void	*philo_routine(void *arg)
 	table = philo->table;
 	while (1)
 	{
+		if (table->hamid_lousi_mat)
+			return (NULL);
+		if (table->num_philos == 1)
+		{
+			pthread_mutex_lock(&table->forks[0]);
+			usleep(table->time_to_die * 1000);
+			pthread_mutex_unlock(&table->forks[0]);
+			return (NULL);
+		}
 		if (philo->id % 2 == 0)
 		{
 		    pthread_mutex_lock(&table->forks[philo->right_fork]);
@@ -74,6 +83,7 @@ void	monitor_philos(t_table *table)
 				pthread_mutex_lock(&table->print_mutex);
 				printf("Philosopher %d has died\n", table->philos[i].id);
 				pthread_mutex_unlock(&table->print_mutex);
+				table->hamid_lousi_mat = 1;
 				return ;
 			}
 			pthread_mutex_unlock(&table->eat_mutex);

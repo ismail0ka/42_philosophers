@@ -6,7 +6,7 @@
 /*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:04:21 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/23 18:54:35 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:18:29 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	init_table(t_table *table, int argc, const char **argv)
 	if (!init_forks(table))
 		return (free(table->forks), 0);
 	table->philos = NULL;
+	table->hamid_lousi_mat = 0;
 	return (1);
 }
 
@@ -95,7 +96,7 @@ int	init_philos(t_table *table)
 	{
 		table->philos[i].id = i + 1;
 		table->philos[i].eat_count = 0;
-		table->philos[i].last_meal_time = 0;
+		table->philos[i].last_meal_time = table->start_time;
 		table->philos[i].table = table;
 		table->philos[i].left_fork = i;
 		table->philos[i].right_fork = (i + 1) % table->num_philos;

@@ -1,5 +1,5 @@
 CC=cc
-CFLAGS=-Wall -Wextra -Werror -Iheaders
+CFLAGS=-Wall -Wextra -Werror -Iheaders -g3
 LDFLAGS=-lpthread
 TARGET=philo
 

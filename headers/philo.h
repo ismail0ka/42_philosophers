@@ -6,7 +6,7 @@
 /*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:05:02 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/23 19:00:10 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/04/24 19:17:57 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_table
 	int				time_to_die;
 	int				must_eat_count;
 	long long		start_time;
+	int				hamid_lousi_mat;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	eat_mutex;

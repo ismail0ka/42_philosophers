@@ -6,7 +6,7 @@
 /*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:01:27 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/23 19:48:28 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/04/24 18:38:35 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ int	main(int argc, const char **argv)
 		return (free(table), 1);
 	}
 	start_simulation(table);
-	free_table(table);
+	//free_table(table);
 	return (0);
 }
