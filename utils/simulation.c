@@ -6,7 +6,7 @@
 /*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:49:52 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/24 19:27:51 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:19:38 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@ void	*philo_routine(void *arg)
 
 	philo = (t_philo *)arg;
 	table = philo->table;
-	while (1)
+	while (!philo->someone_died)
 	{
-		if (table->hamid_lousi_mat)
-			return (NULL);
 		if (table->num_philos == 1)
 		{
 			pthread_mutex_lock(&table->forks[0]);
@@ -68,6 +66,19 @@ void	*philo_routine(void *arg)
 	return (NULL);
 }
 
+void	propagate_death(t_philo *philos)
+{
+	int	i;
+
+	i = -1;
+	while (++i < philos->table->num_philos)
+	{
+		pthread_mutex_lock(&philos[i].table->eat_mutex);
+		philos[i].someone_died = 1;
+		pthread_mutex_unlock(&philos[i].table->eat_mutex);
+	}
+}
+
 void	monitor_philos(t_table *table)
 {
 	int	i;
@@ -77,16 +88,14 @@ void	monitor_philos(t_table *table)
 		i = -1;
 		while (++i < table->num_philos)
 		{
-			pthread_mutex_lock(&table->eat_mutex);
 			if (get_time() - table->philos[i].last_meal_time > table->time_to_die)
 			{
 				pthread_mutex_lock(&table->print_mutex);
 				printf("Philosopher %d has died\n", table->philos[i].id);
+				propagate_death(table->philos);
 				pthread_mutex_unlock(&table->print_mutex);
-				table->hamid_lousi_mat = 1;
 				return ;
 			}
-			pthread_mutex_unlock(&table->eat_mutex);
 		}
 		usleep(1000);
 	}

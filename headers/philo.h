@@ -6,7 +6,7 @@
 /*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:05:02 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/24 19:17:57 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/04/25 15:10:24 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_philo
 	int				left_fork;
 	int				right_fork;
 	int				eat_count;
+	int				someone_died;
 	long long		last_meal_time;
 	pthread_t		thread;
 	struct s_table	*table;
@@ -38,7 +39,6 @@ typedef struct s_table
 	int				time_to_die;
 	int				must_eat_count;
 	long long		start_time;
-	int				hamid_lousi_mat;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	eat_mutex;
