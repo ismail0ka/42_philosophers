@@ -6,7 +6,7 @@
 /*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:04:21 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/25 15:18:50 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/04/25 19:25:29 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ static int	init_forks(t_table *table)
 		if (pthread_mutex_init(&table->forks[i], NULL) != 0)
 			return (0);
 	}
+	if (pthread_mutex_init(&table->death_mutex, NULL) != 0)
+		return (0);
 	if (pthread_mutex_init(&table->print_mutex, NULL) != 0)
 		return (0);
 	if (pthread_mutex_init(&table->eat_mutex, NULL) != 0)
@@ -80,6 +82,7 @@ int	init_table(t_table *table, int argc, const char **argv)
 	if (!init_forks(table))
 		return (free(table->forks), 0);
 	table->philos = NULL;
+	table->death_flag = 0;
 	return (1);
 }
 
@@ -95,11 +98,20 @@ int	init_philos(t_table *table)
 	{
 		table->philos[i].id = i + 1;
 		table->philos[i].eat_count = 0;
-		table->philos[i].last_meal_time = table->start_time;
+		table->philos[i].last_meal_time = get_time();
 		table->philos[i].table = table;
 		table->philos[i].left_fork = i;
 		table->philos[i].right_fork = (i + 1) % table->num_philos;
-		table->philos[i].someone_died = 0;
+	}
+	i = -1;
+	while (++i < table->num_philos)
+	{
+		if (pthread_create(&table->philos[i].thread, NULL, &philo_cycle,
+				&table->philos[i]) != 0)
+		{
+			write(2, "Error: Failed to create philosopher thread\n", 43);
+			return (0);
+		}
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:05:02 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/25 15:10:24 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/04/25 19:34:05 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ typedef struct s_philo
 	int				left_fork;
 	int				right_fork;
 	int				eat_count;
-	int				someone_died;
 	long long		last_meal_time;
 	pthread_t		thread;
 	struct s_table	*table;
@@ -38,18 +37,21 @@ typedef struct s_table
 	int				time_to_sleep;
 	int				time_to_die;
 	int				must_eat_count;
+	int				death_flag;
 	long long		start_time;
+	t_philo			*philos;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	death_mutex;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	eat_mutex;
-	t_philo			*philos;
 }	t_table;
 
 //Init
 int		init_table(t_table *table, int argc, const char **argv);
 int		init_philos(t_table *table);
 //Simulation
-void	*philo_routine(void *arg);
+void	*monitor_philos(void *arg);
+void	*philo_cycle(void *arg);
 void	start_simulation(t_table *table);
 //Utils
 int		ft_atoi(const char *str);
