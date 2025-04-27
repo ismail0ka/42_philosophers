@@ -6,7 +6,7 @@
 /*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:04:21 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/25 19:25:29 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/04/27 17:33:52 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,16 +102,6 @@ int	init_philos(t_table *table)
 		table->philos[i].table = table;
 		table->philos[i].left_fork = i;
 		table->philos[i].right_fork = (i + 1) % table->num_philos;
-	}
-	i = -1;
-	while (++i < table->num_philos)
-	{
-		if (pthread_create(&table->philos[i].thread, NULL, &philo_cycle,
-				&table->philos[i]) != 0)
-		{
-			write(2, "Error: Failed to create philosopher thread\n", 43);
-			return (0);
-		}
 	}
 	return (1);
 }
