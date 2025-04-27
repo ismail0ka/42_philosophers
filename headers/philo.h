@@ -6,7 +6,7 @@
 /*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:05:02 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/27 17:31:21 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/04/27 18:38:25 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	*monitor_philos(void *arg);
 void	*philo_cycle(void *arg);
 void	start_simulation(t_table *table);
 //Utils
+void	sync_print(t_philo *philo, const char *message);
 int		ft_atoi(const char *str);
 long long	get_time(void);
 //Cleanup
