@@ -6,7 +6,7 @@
 /*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:01:27 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/28 15:14:38 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/04/28 16:37:38 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,5 @@ int	main(int argc, const char **argv)
 	if (table->must_eat_count == 0 || table->num_philos == 0)
 		free_table(table);
 	start_simulation(table);
-	//free_table(table);
 	return (0);
 }

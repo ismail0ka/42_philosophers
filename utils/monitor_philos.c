@@ -6,48 +6,45 @@
 /*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 18:31:56 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/28 15:13:09 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/04/28 17:19:03 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	check_death(t_table *table)
+int	a_philo_died(t_table *table)
 {
-	int	i;
+	int i;
 
-	i = -1;
-	while (++i < table->num_philos)
-	{
+    i = -1;
+    while (++i < table->num_philos)
+    {
 		pthread_mutex_lock(&table->state_mutex);
-		if (get_time() - table->philos[i].last_meal_time
-			> table->time_to_die)
-		{
-			table->philos[i].died = 1;
-			pthread_mutex_unlock(&table->state_mutex);
-			return (0);
-		}
-		pthread_mutex_unlock(&table->state_mutex);
-	}
-	return (1);
+		if (get_time() - table->philos[i].last_meal_time > table->time_to_die)
+        {
+            table->death_flag = 1;
+            sync_print(&table->philos[i], "has died\n");
+            pthread_mutex_unlock(&table->state_mutex);
+            return (1);
+        }
+        pthread_mutex_unlock(&table->state_mutex);
+    }
+    return (0);
 }
 
-void	find_dead_philo(t_table *table)
+int	all_philos_ate(t_table *table)
 {
 	int	i;
 
+	if (table->must_eat_count == -1)
+		return (1);
 	i = -1;
 	while (++i < table->num_philos)
 	{
-		pthread_mutex_lock(&table->state_mutex);
-		if (table->philos[i].died)
-		{
-			sync_print(&table->philos[i], "has died\n");
-			pthread_mutex_unlock(&table->state_mutex);
-			return ;
-		}
-		pthread_mutex_unlock(&table->state_mutex);
+		if (table->philos[i].eat_count < table->must_eat_count)
+			return (0);
 	}
+	return (1);
 }
 
 void	*monitor_philos(void *arg)
@@ -55,11 +52,7 @@ void	*monitor_philos(void *arg)
 	t_table	*table;
 
 	table = (t_table *)arg;
-	while (1)
-	{
-		if (!check_death(table))
-			break ;
-	}
-	find_dead_philo(table);
+	while (!(a_philo_died(table) || all_philos_ate(table)))
+	{}
 	return (NULL);
 }

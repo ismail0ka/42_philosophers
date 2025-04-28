@@ -6,7 +6,7 @@
 /*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:05:02 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/28 15:05:18 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/04/28 16:07:40 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ typedef struct s_philo
 	int				left_fork;
 	int				right_fork;
 	int				eat_count;
-	int				died;
 	long long		last_meal_time;
 	pthread_t		thread;
 	struct s_table	*table;
@@ -38,6 +37,7 @@ typedef struct s_table
 	int				time_to_sleep;
 	int				time_to_die;
 	int				must_eat_count;
+	int				death_flag;
 	long long		start_time;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
