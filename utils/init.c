@@ -6,7 +6,7 @@
 /*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:04:21 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/27 17:33:52 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/04/28 15:03:59 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,9 @@ static int	init_forks(t_table *table)
 		if (pthread_mutex_init(&table->forks[i], NULL) != 0)
 			return (0);
 	}
-	if (pthread_mutex_init(&table->death_mutex, NULL) != 0)
+	if (pthread_mutex_init(&table->state_mutex, NULL) != 0)
 		return (0);
 	if (pthread_mutex_init(&table->print_mutex, NULL) != 0)
-		return (0);
-	if (pthread_mutex_init(&table->eat_mutex, NULL) != 0)
 		return (0);
 	return (1);
 }
@@ -82,7 +80,6 @@ int	init_table(t_table *table, int argc, const char **argv)
 	if (!init_forks(table))
 		return (free(table->forks), 0);
 	table->philos = NULL;
-	table->death_flag = 0;
 	return (1);
 }
 
@@ -102,6 +99,7 @@ int	init_philos(t_table *table)
 		table->philos[i].table = table;
 		table->philos[i].left_fork = i;
 		table->philos[i].right_fork = (i + 1) % table->num_philos;
+		table->philos[i].died = 0;
 	}
 	return (1);
 }

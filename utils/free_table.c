@@ -6,7 +6,7 @@
 /*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:59:43 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/23 18:59:56 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/04/28 01:36:39 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ void	free_table(t_table *table)
 		free(table->philos);
 	}
 	pthread_mutex_destroy(&table->print_mutex);
-	pthread_mutex_destroy(&table->eat_mutex);
+	pthread_mutex_destroy(&table->state_mutex);
 	free(table);
 }
