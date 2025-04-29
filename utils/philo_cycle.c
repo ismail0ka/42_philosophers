@@ -6,7 +6,7 @@
 /*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 18:54:45 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/28 17:07:42 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:17:54 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	eat(t_philo *philo)
 	pthread_mutex_lock(&philo->table->state_mutex);
 	philo->last_meal_time = get_time();
 	sync_print(philo, "is eating\n");
-	usleep(philo->table->time_to_eat * 1000);
 	pthread_mutex_unlock(&philo->table->state_mutex);
+	usleep(philo->table->time_to_eat * 1000);
 	philo->eat_count++;
 	pthread_mutex_unlock(&philo->table->forks[philo->left_fork]);
 	pthread_mutex_unlock(&philo->table->forks[philo->right_fork]);
@@ -39,16 +39,22 @@ void	*philo_cycle(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2 != 0)
-		usleep(100);
+		usleep(10000);
 	while (1)
 	{
-		//pthread_mutex_lock(&philo->table->state_mutex);
-        //if (philo->table->death_flag)
-        //{
-        //    pthread_mutex_unlock(&philo->table->state_mutex);
-        //    break;
-        //}
-        //pthread_mutex_unlock(&philo->table->state_mutex);
+		pthread_mutex_lock(&philo->table->state_mutex);
+		if (philo->table->death_flag)
+		{
+			pthread_mutex_unlock(&philo->table->state_mutex);
+			break ;
+		}
+		if (philo->table->must_eat_count != -1
+			&& (philo->eat_count >= philo->table->must_eat_count || philo->table->must_eat_flag))
+		{
+			pthread_mutex_unlock(&philo->table->state_mutex);
+			break ;
+		}
+		pthread_mutex_unlock(&philo->table->state_mutex);
 		eat(philo);
 		sleep_and_think(philo);
 	}

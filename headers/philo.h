@@ -6,7 +6,7 @@
 /*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:05:02 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/28 16:07:40 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:40:45 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_table
 	int				time_to_die;
 	int				must_eat_count;
 	int				death_flag;
+	int				must_eat_flag;
 	long long		start_time;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
@@ -49,7 +50,7 @@ typedef struct s_table
 int		init_table(t_table *table, int argc, const char **argv);
 int		init_philos(t_table *table);
 //Simulation
-void	*monitor_philos(void *arg);
+void	*monitor_philos(t_table *table);
 void	*philo_cycle(void *arg);
 void	start_simulation(t_table *table);
 //Utils

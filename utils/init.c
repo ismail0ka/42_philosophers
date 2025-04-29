@@ -6,7 +6,7 @@
 /*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:04:21 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/28 16:59:46 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/04/29 15:41:07 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	init_table(t_table *table, int argc, const char **argv)
 		return (free(table->forks), 0);
 	table->philos = NULL;
 	table->death_flag = 0;
+	table->must_eat_flag = 0;
 	return (1);
 }
 
