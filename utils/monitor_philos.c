@@ -6,7 +6,7 @@
 /*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 18:31:56 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/29 16:07:41 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:48:25 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 int	a_philo_died(t_table *table)
 {
-	int i;
+	int	i;
 
-    i = -1;
-    while (++i < table->num_philos)
-    {
+	i = -1;
+	while (++i < table->num_philos)
+	{
 		pthread_mutex_lock(&table->state_mutex);
 		if (get_time() - table->philos[i].last_meal_time > table->time_to_die)
-        {
+		{
 			sync_print(&table->philos[i], "has died\n");
 			table->death_flag = 1;
 			pthread_mutex_unlock(&table->state_mutex);
 			usleep(500);
-            return (1);
-        }
-        pthread_mutex_unlock(&table->state_mutex);
-    }
-    return (0);
+			return (1);
+		}
+		pthread_mutex_unlock(&table->state_mutex);
+	}
+	return (0);
 }
 
 int	all_philos_ate(t_table *table)

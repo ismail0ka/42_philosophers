@@ -6,7 +6,7 @@
 /*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:01:27 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/28 16:37:38 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:39:42 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	main(int argc, const char **argv)
 
 	if (argc < 5 || argc > 6)
 	{
-		printf("Usage: ./philo <number_of_philosophers> <time_to_die> <time_to_eat> <time_to_sleep> [number_of_times_each_philosopher_must_eat]\n");
+		printf("Usage: ./philo <number_of_philos> <time_to_die>\
+ <time_to_eat> <time_to_sleep> [number_of_times_each_philo_must_eat]\n");
 		return (1);
 	}
 	table = malloc(sizeof(t_table));

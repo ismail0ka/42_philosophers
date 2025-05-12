@@ -6,7 +6,7 @@
 /*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:49:52 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/29 16:07:19 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/05/12 14:54:19 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	start_simulation(t_table *table)
 	i = -1;
 	while (++i < table->num_philos)
 	{
-		if (pthread_create(&table->philos[i].thread, NULL, &philo_cycle,
-			&table->philos[i]) != 0)
+		if (pthread_create(&table->philos[i].thread, NULL,
+				&philo_cycle, &table->philos[i]) != 0)
 			return ;
 	}
 	if (pthread_create(&monitor, NULL, (void *)monitor_philos, table) != 0)
