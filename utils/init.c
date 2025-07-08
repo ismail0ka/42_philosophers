@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ikarouat <ikarouat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:04:21 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/29 15:41:07 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/05/13 16:29:44 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,10 @@ int	init_philos(t_table *table)
 {
 	int	i;
 
-	i = -1;
 	table->philos = malloc(sizeof(t_philo) * table->num_philos);
 	if (!table->philos)
 		return (0);
+	i = -1;
 	while (++i < table->num_philos)
 	{
 		table->philos[i].id = i + 1;

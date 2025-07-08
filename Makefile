@@ -1,5 +1,5 @@
 CC=cc
-CFLAGS=-Wall -Wextra -Werror -Iheaders -g3
+CFLAGS=-Wall -Wextra -Werror -Iheaders #-fsanitize=thread -g3
 LDFLAGS=-lpthread
 TARGET=philo
 

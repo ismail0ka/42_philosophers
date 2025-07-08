@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_table.c                                       :+:      :+:    :+:   */
+/*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/23 18:59:43 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/04/28 01:36:39 by ikarouat         ###   ########.fr       */
+/*   Created: 2025/07/06 21:51:22 by ikarouat          #+#    #+#             */
+/*   Updated: 2025/07/06 21:51:24 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	free_table(t_table *table)
+void	cleanup(t_table *table)
 {
 	int	i;
 
@@ -26,8 +26,6 @@ void	free_table(t_table *table)
 	if (table->philos)
 	{
 		i = -1;
-		while (++i < table->num_philos)
-			pthread_join(table->philos[i].thread, NULL);
 		free(table->philos);
 	}
 	pthread_mutex_destroy(&table->print_mutex);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor_philos.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ikarouat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ikarouat <ikarouat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 18:31:56 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/05/12 14:48:25 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/07/08 18:54:06 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,23 @@
 
 int	a_philo_died(t_table *table)
 {
-	int	i;
+	int			i;
+	long long	time_since_last_meal;
+	long long	current_time;
 
 	i = -1;
 	while (++i < table->num_philos)
 	{
 		pthread_mutex_lock(&table->state_mutex);
-		if (get_time() - table->philos[i].last_meal_time > table->time_to_die)
+		time_since_last_meal = get_time() - table->philos[i].last_meal_time;
+		if (time_since_last_meal > table->time_to_die)
 		{
-			sync_print(&table->philos[i], "has died\n");
 			table->death_flag = 1;
+			current_time = get_time() - table->start_time;
+			pthread_mutex_lock(&table->print_mutex);
+			printf("%lld %d has died\n", current_time, table->philos[i].id);
+			pthread_mutex_unlock(&table->print_mutex);
 			pthread_mutex_unlock(&table->state_mutex);
-			usleep(500);
 			return (1);
 		}
 		pthread_mutex_unlock(&table->state_mutex);
@@ -42,8 +47,10 @@ int	all_philos_ate(t_table *table)
 	i = -1;
 	while (++i < table->num_philos)
 	{
+		pthread_mutex_lock(&table->state_mutex);
 		if (table->philos[i].eat_count < table->must_eat_count)
-			return (0);
+			return (pthread_mutex_unlock(&table->state_mutex), 0);
+		pthread_mutex_unlock(&table->state_mutex);
 	}
 	return (1);
 }
@@ -54,7 +61,7 @@ void	*monitor_philos(t_table *table)
 	{
 		if (a_philo_died(table) || all_philos_ate(table))
 			break ;
-		usleep(1000);
+		usleep(100);
 	}
 	return (NULL);
 }
