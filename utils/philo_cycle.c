@@ -6,7 +6,7 @@
 /*   By: ikarouat <ikarouat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 18:54:45 by ikarouat          #+#    #+#             */
-/*   Updated: 2025/07/08 19:18:30 by ikarouat         ###   ########.fr       */
+/*   Updated: 2025/07/11 23:00:19 by ikarouat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	sleep_and_think(t_philo *philo)
 	sync_print(philo, "is sleeping\n");
 	ft_usleep(philo->table->time_to_sleep, philo->table);
 	sync_print(philo, "is thinking\n");
+	usleep(200);
 }
 
 void	*philo_cycle(void *arg)
@@ -52,7 +53,7 @@ void	*philo_cycle(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	if (philo->id % 2)
+	if (philo->id % 2 == 0)
 		usleep(100);
 	while (1)
 	{
